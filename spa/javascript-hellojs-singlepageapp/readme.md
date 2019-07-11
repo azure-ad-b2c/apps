@@ -6,8 +6,6 @@ This sample shows how to build a web application using Hello.js that performs id
 
 The app is a simple web application that performs sign-in, sign-up, and sign-out functions with signIn-signUp policies and also edit profile using EditProfile Policy. Once the user signed in sample GET request is made to an API. It is intended to help get you started with Azure AD B2C in a simple web application built on hello.js, giving you the necessary tools to execute Azure AD B2C policies & securely identify users in your application.  
 
-##### Please note that this functionality is still in "preview"
-
 ## Hello.JS 
 
 Hello.js is a client-side JavaScript SDK for authenticating with OAuth2 web services and querying REST APIs. For more details about hello.js, check out their [documentation](https://adodson.com/hello.js/#hellojs).
