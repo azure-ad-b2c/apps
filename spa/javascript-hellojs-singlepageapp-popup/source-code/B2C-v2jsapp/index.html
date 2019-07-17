@@ -91,21 +91,7 @@
             });
 
         });
-        if (localStorage && localStorage.getItem('hello')) {
-                let helloState = JSON.parse(localStorage.getItem('hello').toString());
 
-                let helloUserSession = helloState[helloNetwork.adB2CSignInSignUp];
-                if (helloUserSession && helloUserSession.error && helloUserSession.error.message) {
-                    // check for error code
-                    const msg = helloUserSession.error.message;
-                    if (msg) {
-                        if (msg.indexOf('AADB2C90118') !== -1) {
-                            localStorage.clear()
-                            policyLogin(helloNetwork.adB2CPwdReset, loginDisplayType.Popup)
-                        };
-                    }
-                }
-            }
         function setSignInState(signedIn) {
             $('.sign-up-sign-in').toggleClass('hidden', signedIn);
             $('.api-call').toggleClass('hidden', !signedIn);
@@ -124,7 +110,7 @@
                     console.log(prop); //will give current B2C policy name
                     rootKey = prop;
                 }
-                callApi(rootKey);
+                callApi("adB2CSignInSignUp");
             });
 
             $('.sign-out').on('click', function () {
@@ -160,6 +146,8 @@
             hello(network).login({ display: displayType }).then(function (auth) {
                 setSignInState(true);
             }, function (e) {
+                checkPwdReset(helloNetwork.adB2CPwdReset, loginDisplayType.PopUp);
+                
                 if ('Iframe was blocked' in e.error.message) {
                     policyLogin(network, loginDisplayType.Page);
                     return;
@@ -168,6 +156,31 @@
             });
         }
 
+        function checkPwdReset(network, displayType) {
+            if (localStorage && localStorage.getItem('hello')) {
+                let helloState = JSON.parse(localStorage.getItem('hello').toString());
+
+                let helloUserSession = helloState[helloNetwork.adB2CSignInSignUp];
+                if (helloUserSession && helloUserSession.error && helloUserSession.error.message) {
+                    // check for error code
+                    const msg = helloUserSession.error.message;
+                    if (msg) {
+                        if (msg.indexOf('AADB2C90118') !== -1) {
+                            localStorage.clear()
+                            hello(network).login({ display: displayType }).then(function (auth) {
+                                setSignInState(true);
+                            }, function (e) {
+                                if ('Iframe was blocked' in e.error.message) {
+                                    policyLogin(network, loginDisplayType.Page);
+                                    return;
+                                }
+                                bootbox.alert('Signin error: ' + e.error.message);
+                            });
+                        }
+                    }
+                }
+            }
+        }
         
         function policyLogout(network, policy) {
             if (online(network)) {
