@@ -1,6 +1,6 @@
 # Azure Active Directory B2C app samples
 
-The following tables provide links to samples for applications federation with Azure AD B2C as identity provider
+The following tables provide links to samples for integrating Azure AD B2C as an identity provider.
 
 ## Single page apps
 |Platform|OAuth2 library|Sample|
