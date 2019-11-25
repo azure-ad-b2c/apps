@@ -7,8 +7,8 @@ The following tables provide links to samples for integrating Azure AD B2C as an
 |Platform|OAuth2 library|Sample|
 |----|----|----|
 | [Angular7 (Redirect)](https://angular.io/)|[angular-oauth2-oidc](https://www.npmjs.com/package/angular-oauth2-oidc) | [Sample](apps/spa-angular-oauth2-oidc)
-| JavaScript (Redirect)|[hello.js](https://github.com/MrSwitch/hello.js/) | [Sample](apps/spa/javascript-hellojs-singlepageapp)
-| JavaScript (PopUp)|[hello.js](https://github.com/MrSwitch/hello.js/) | [Sample](apps/spa-javascript-hellojs-singlepageapp-popup)
+| JavaScript (Redirect)|[hello.js](https://github.com/MrSwitch/hello.js/) | [Sample](apps/spa-hellojs)
+| JavaScript (PopUp)|[hello.js](https://github.com/MrSwitch/hello.js/) | [Sample](apps/spa-hellojs-popup)
 
 ## Mobile apps
 
