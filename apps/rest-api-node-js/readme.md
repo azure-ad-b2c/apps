@@ -1,17 +1,4 @@
----
-title: Secure a Node.JS API by using Azure Active Directory B2C
-description: Learn how to use access tokens issued by Azure Active Directory B2C to Secure a Node.js web API endpoint.
-services: active-directory-b2c
-author: mmacy
-manager: celestedg
 
-ms.service: active-directory
-ms.workload: identity
-ms.topic: conceptual
-ms.date: 08/31/2019
-ms.author: marsma
-ms.subservice: B2C
----
 
 # Secure a Node.js web API 
 
