@@ -209,7 +209,7 @@ To create a new controller to expose sign-in and sign-out methods, follow these 
 2.	Select **MVC (.NET version) Controller – Empty**.
 3.	Select **Add**.
 4.	Name it **AccountController** and then select **Add**.
-5.	Replace the code with the follwoing:
+5.	Replace the code with the following:
 
     ```csharp
     using Microsoft.Owin.Security;
@@ -329,7 +329,7 @@ In Visual Studio, create a new view to add the sign-in button and to display use
     ```
     
 1.	Open the **Views\Shared\_Layout.cshtml** file.
-1. Localte the DIV element `<div class="navbar-collapse collapse">`
+1. Locate the DIV element `<div class="navbar-collapse collapse">`
 1.	Add following snippet just before the closing tag
 
     ```
@@ -393,7 +393,7 @@ Open your **web.config** file and add following entries to the `<appSettings>` s
 * **ida:ClientIds** Application ID you just registered.
 * **ida:RedirectUri** the SSL URL of your project.
 * **ida:SignUpSignInPolicyId** the name of the sign-up and sign-in policy
-* **ida:EditProfilePolicyId** the name of the edig profile policy
+* **ida:EditProfilePolicyId** the name of the edit profile policy
 * **ida:ResetPasswordPolicyId** the name of the password reset policy
 
 ```XML
