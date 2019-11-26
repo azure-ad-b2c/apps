@@ -14,7 +14,7 @@ Web Apps that calls web APIs:
 You need the following resources in place before continuing with the steps in this article:
 
 - [Azure AD B2C tenant](tutorial-create-tenant.md)
-0- [Application registered](tutorial-register-applications.md) and create a **client secret** for your application.
+- [Application registered](tutorial-register-applications.md) and create a **client secret** for your application.
 - [User flows](tutorial-create-user-flows.md), or [custom policies](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom?tabs=applications) are create in your tenant.
 - [Configure scopes](https://docs.microsoft.com/en-us/azure/active-directory-b2c/add-web-application?tabs=applications) and Grant permissions:
     - `read` - Read access to the web API
