@@ -121,6 +121,7 @@ Create new controllers to expose sign-in and sign-out methods and call the REST 
 |-----|-----|-----| 
 |[AccountController.cs](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Controllers/AccountController.cs)|Controllers| A controller to expose sign-in and sign-out methods|
 |[TasksController.cs](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Controllers/TasksController.cs) | Controllers| Makes a call to the API to retrieves the list of tasks, create and delete tasks | 
+|[HomeController.cs](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Controllers/HomeController.cs) |Controllers | [Optional] Add the `Claims()` method. So, authorized users will be able to see the list of claims.
 
 ## 5. Add sign-in, edit profile and sign-out buttons
 
@@ -134,14 +135,23 @@ In Visual Studio, create a new view to add the sign-in button and to display use
     |File name | Locaiton | Description|
     |-----|-----|-----| 
     |[_LoginPartial.cshtml](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Views/Shared/_LoginPartial.cshtml) |Views\Shared |A view that shows the sign-in button and to display user information after authentication, such as a sign-out and edit profile button. |
+    |[Claims.cshtml](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Views/Home/Claims.cshtml) | Views\Home |  [Optional] Add the `Claims.cshtml` view. So, authorized users will be able to see the list of claims.|
+    |[Index.cshtml](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Views/Tasks/Index.cshtml) | Viees\Task | [Optional] Add the `Claims.cshtml` view. So, authorized users will be able to make a call to the task REST API service. If the `Task` folder doesn't exist, create such a folder.| 
 
     
 1.	Open the **Views\Shared\_Layout.cshtml** file.
 1. Locate the DIV element `<div class="navbar-collapse collapse">`
-1.	Add following snippet just before the closing tag
+1.	Replace the conten of the DIV tag with following one
 
-    ```
-    @Html.Partial("_LoginPartial")
+    ```HTML
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("Claims", "Claims", "Home")</li>
+            <li>@Html.ActionLink("To-Do List", "Index", "Tasks")</li>
+        </ul>
+        @Html.Partial("_LoginPartial")
+    </div>
     ```
 
 Your final **_Layout.cshtml**should look like [_Layout.cshtml](https://github.com/Azure-Samples/active-directory-b2c-dotnet-webapp-and-webapi/blob/master/TaskWebApp/Views/Shared/_Layout.cshtml)
