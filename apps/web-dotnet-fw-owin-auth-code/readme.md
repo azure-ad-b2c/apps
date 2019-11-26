@@ -189,7 +189,9 @@ Open your **web.config** file and add following entries to the `<appSettings>` s
     <add key="api:WriteScope" value="write" />
 ```
 
-## Test you project
+## Run the sample
 
-The above configuration requires you to run the project under the `https://localhost:44316/` URL. If it's not so, right click on your MVC Project. Go to **Properties**, then select the **Web** tab.
+Clean the solution, rebuild the solution, and run it. Once you run the  web application, you are presented with the standard ASP.NET home page. Click on the Sign-in button top-right to trigger the Azure AD B2C sign-up or sign-in flow.
+
+> Note: The above configuration requires you to run the project under the `https://localhost:44316/` URL. If it's not so, right click on your MVC Project. Go to **Properties**, then select the **Web** tab.
 You can change the port number in the Project Url. In this example: `https://localhost:44316/`. Save and run your project again.
