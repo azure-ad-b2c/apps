@@ -13,6 +13,6 @@ The following tables provide links to samples for integrating Azure AD B2C as an
 
 ## Secure web and mobile applications 
 
-|Platform|OAuth2 library|Documentation|Sample|
+|Platform|OAuth2 library|Documentation|Flow/Grant|
 |----|----|----|----|
-|[.Net Framework MVC5](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/getting-started)| [Microsoft.Owin.Security.OpenIdConnect](https://www.nuget.org/packages/Microsoft.Owin.Security.OpenIdConnect/) and [Microsoft.Owin.Security.Cookies](https://www.nuget.org/packages/Microsoft.Owin.Security.Cookies) | [Documentation](apps/web-donet-fw-owin-oidc) | Demonstrates how to implement sign-in to Microsoft through an ASP.NET MVC solution by using a traditional web browser-based application and OpenID Connect|
+|[.Net Framework MVC5](https://docs.microsoft.com/en-us/aspnet/mvc/overview/getting-started/introduction/getting-started)| [Microsoft.Owin.Security.OpenIdConnect](https://www.nuget.org/packages/Microsoft.Owin.Security.OpenIdConnect/) and [Microsoft.Owin.Security.Cookies](https://www.nuget.org/packages/Microsoft.Owin.Security.Cookies) | [Documentation](apps/web-donet-fw-owin-oidc) | Demonstrates how to implement sign-in to Microsoft through an ASP.NET MVC solution by using a traditional web browser-based application and **OpenID Connect**|
