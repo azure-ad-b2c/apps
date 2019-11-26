@@ -178,3 +178,8 @@ Open your **web.config** file and add following entries to the `<appSettings>` s
     <add key="api:ReadScope" value="read" />
     <add key="api:WriteScope" value="write" />
 ```
+
+## Test you project
+
+The above configuration requires you to run the project under the `https://localhost:44316/` URL. If it's not so, right click on your MVC Project. Go to **Properties**, then select the **Web** tab.
+You can change the port number in the Project Url. In this example: `https://localhost:44316/`. Save and run your project again.
