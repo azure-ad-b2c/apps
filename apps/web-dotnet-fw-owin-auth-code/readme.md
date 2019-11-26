@@ -17,8 +17,8 @@ You need the following resources in place before continuing with the steps in th
 0- [Application registered](tutorial-register-applications.md) and create a **client secret** for your application.
 - [User flows](tutorial-create-user-flows.md), or [custom policies](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom?tabs=applications) are create in your tenant.
 - [Configure scopes](https://docs.microsoft.com/en-us/azure/active-directory-b2c/add-web-application?tabs=applications) and Grant permissions:
-    - `demo.read` - Read access to the web API
-    - `demo.write` - Write access to the web API
+    - `read` - Read access to the web API
+    - `write` - Write access to the web API
 
 ## How it works
 Given that letting a user sign in is delegated to the Open ID connect (OIDC) middleware, you want to hook-up in the OIDC process. The way to do that is different depending on the framework you use. In the case of ASP.NET, you'll subscribe to middleware OIDC events. The principle is that:
