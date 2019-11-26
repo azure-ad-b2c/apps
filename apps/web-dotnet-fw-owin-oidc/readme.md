@@ -15,11 +15,11 @@ You need the following resources in place before continuing with the steps in th
 
 * [Azure AD B2C tenant](tutorial-create-tenant.md)
 * [Application registered](tutorial-register-applications.md) in your tenant
-* [User flows created](tutorial-create-user-flows.md) in your tenant
+* [User flows](tutorial-create-user-flows.md), or [custom policies](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom?tabs=applications) are create in your tenant
 
 ## Get Azure AD B2C application ID
 
-When you secure an web API with Azure AD B2C, you need to specify the list of apps (web/mobile SPA applications) that are allow to acess the web API. First, record the application ID of an application you've previously created in your Azure AD B2C tenant. If you're using the application you created in the prerequisites, use the application ID for *webbapp1*.
+When you secure an web API with Azure AD B2C, you need to specify the list of apps (web/mobile SPA applications) that are allow to access the web API. First, record the application ID of an application you've previously created in your Azure AD B2C tenant. If you're using the application you created in the prerequisites, use the application ID for *webbapp1*.
 
 1. Browse to your Azure AD B2C tenant in the [Azure portal](https://portal.azure.com).
 1. Under **Manage**, select **Applications**.
