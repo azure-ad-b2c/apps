@@ -14,3 +14,217 @@ You need the following resources in place before continuing with the steps in th
 * [Azure AD B2C tenant](tutorial-create-tenant.md)
 * [Application registered](tutorial-register-applications.md) in your tenant
 * [User flows](tutorial-create-user-flows.md), or [custom policies](https://docs.microsoft.com/en-us/azure/active-directory-b2c/active-directory-b2c-get-started-custom?tabs=applications) are create in your tenant
+
+
+## 1. Setup your web application
+
+This section describes how to install and configure the authentication pipeline through Asp .Net Core `Authentication.AzureADB2C.UI` middleware on a MVC project by using OpenID Connect.
+
+# [Visual Studio](#tab/visual-studio)
+
+* From the **File** menu, select **New** > **Project**.
+* Select the **ASP.NET Core Web Application** template and click **Next**.
+* Name the project *SampleWebApp* and click **Create**.
+* In the **Create a new ASP.NET Core Web Application** dialog, confirm that **.NET Core** and **ASP.NET Core 3.0** are selected.
+* Select the **Web Application (Model-View-Controller)** template and click **Create**. 
+
+
+# [Visual Studio Code](#tab/visual-studio-code)
+
+* Open the [integrated terminal](https://code.visualstudio.com/docs/editor/integrated-terminal).
+* Change directories (`cd`) to the folder that will contain the project folder.
+* Run the following commands, to create a new web API project and open it in Visual Studio Code.
+
+   ```console
+    dotnet new mvc -o SampleWebApp
+    code -r SampleWebApp
+   ```
+
+* When a dialog box asks if you want to add required assets to the project, select **Yes**.
+
+---
+
+## 2. Add authentication components
+
+This sample app uses the [Microsoft.AspNetCore.Authentication.AzureADB2C.UI](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.AzureADB2C.UI/) NuGet package. This package is ASP.NET Core Azure Active Directory B2C Integration provides components for easily integrating Azure Active Directory B2C authentication within your ASP.NET Core application.
+
+ Add the Microsoft.AspNetCore.Authentication.AzureADB2C.UI package to your application. 
+
+# [Visual Studio](#tab/visual-studio)
+```console
+Install-Package Microsoft.AspNetCore.Authentication.AzureADB2C.UI
+```
+
+# [Visual Studio Code](#tab/visual-studio-code)
+
+```console
+dotnet add package Microsoft.AspNetCore.Authentication.AzureADB2C.UI
+```
+
+## 3. Configure the authentication pipeline
+
+The middleware is initialized in the `Startup.cs` file by passing the default authentication scheme and `AzureADB2COptions` options. The options are read from the `appsettings.json` file. The middleware takes care of:
+
+- Requesting OpenID Connect sign-in using the policy from the `appsettings.json` file.
+- Processing OpenID Connect sign-in responses by validating the signature and issuer in an incoming Id Token (JWT token), extracting the user's claims, and putting the claims in `ClaimsPrincipal.Current`.
+- Integrating with the session cookie ASP.NET Core middleware to establish a session for the user.
+
+You can trigger the middleware to send an OpenID Connect sign-in request by decorating a class or method with the `[Authorize]` attribute or by issuing a challenge (see the [AccountController.cs](https://github.com/aspnet/AspNetCore/blob/master/src/Azure/AzureAD/Authentication.AzureADB2C.UI/src/Areas/AzureADB2C/Controllers/AccountController.cs) file which is part of ASP.NET Core).
+
+
+1. Open the **Startup.cs**
+
+1. Add following references to Startup.cs
+
+    ```csharp
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authentication.AzureADB2C.UI;
+    ```
+
+1. Locate the `IConfiguration Configuration { get; }` property, and add following code snippet just before the closing of the property.
+
+    ```csharp
+    // Configuration to sign-in users with Azure AD B2C
+    services.AddAuthentication(AzureADB2CDefaults.AuthenticationScheme)
+    .AddAzureADB2C(options => Configuration.Bind("AzureAdB2C", options));
+
+    // Configuring appsettings section AzureADB2C, into IOptions
+    services.AddOptions();
+    services.Configure<AzureADB2COptions>(Configuration.GetSection("AzureAdB2C"));
+    ```
+
+1. Locate the `Configure(IApplicationBuilder app, IWebHostEnvironment env)` method, and add following code snippet just before the line with `app.UseAuthorization();`.
+
+    ```csharp
+    app.UseAuthentication();
+    ```
+
+## 4. Add sign-in, edit profile and sign-out buttons
+
+1. Under the **Views\Shared** folder, create new `_LoginPartial.cshtml` file
+1. Open the `_LoginPartial.cshtml` file and add following code snippet
+    ```HTML
+    @using System.Security.Principal
+    @if (User.Identity.IsAuthenticated)
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li class="navbar-text">Hello @User.Identity.Name</li>
+            <!-- The Account controller is not defined in this project. Instead, it is part of Authentication.AzureADB2C.UI nuget pagacke and 
+                it defines some well known actions such as SignIn, SignOut and EditProfile-->
+            <li class="navbar-btn">
+                <form method="get" asp-area="AzureADB2C" asp-controller="Account" asp-action="EditProfile">
+                    <button type="submit" class="btn btn-primary" style="margin-right:5px">Edit Profile</button>
+                </form>
+            </li>
+            <li class="navbar-btn">
+                <form method="get" asp-area="AzureADB2C" asp-controller="Account" asp-action="SignOut">
+                    <button type="submit" class="btn btn-primary">Sign Out</button>
+                </form>
+            </li>
+        </ul>
+    }
+    else
+    {
+    <ul class="nav navbar-nav navbar-right">
+    	<li class="navbar-btn">
+    		<form method="get" asp-area="AzureADB2C" asp-controller="Account" asp-action="SignIn">
+    			<button type="submit" class="btn btn-primary">Sign In/Up</button>
+    		</form>
+    	</li>
+    </ul>
+    }
+    ```
+1.	Open the **Views\Shared\_Layout.cshtml** file.
+1. Locate the DIV element `<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">`
+1.	Add following snippet just before the closing tag
+
+    ```HTML
+    <partial name="_LoginPartial" />
+    ```
+
+## 5. [Optional] Add a view to show the token claims
+
+1. Under the **Views\Home** folder add `Claims.cshtml`
+1. Add following code snippet:
+    ```HTML
+    @using System.Security.Claims
+
+    @{
+    	ViewData["Title"] = "Claims";
+    }
+    <h2>@ViewData["Title"].</h2>
+    
+    <table class="table-hover table-condensed table-striped">
+    	<tr>
+    		<th>Claim Type</th>
+    		<th>Claim Value</th>
+    	</tr>
+    ß
+    	@foreach (Claim claim in User.Claims)
+    	{
+    		<tr>
+    			<td>@claim.Type</td>
+    			<td>@claim.Value</td>
+    		</tr>
+    	}
+    </table>
+    ```
+
+1. Open the **HomeControllers\HomeController.cs** file.
+1. Add following method. This method is available only to authorized users. If unauthorized users tries to access this resource, the app will automatically redirects the user to B2C to complete the sign-in.
+    
+    ```csharp
+    [Authorize]
+    public IActionResult Claims()
+    {
+        return View();
+    }
+    ```
+1. Open the **Views\Shared\_Layout.cshtml** file.
+1. Locate following DIV element `<ul class="navbar-nav flex-grow-1">`
+1. Add a link to the claims view
+    ```HTML
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Claims">Claims</a>
+    </li>
+    ```
+    
+## 6. Add the application settings
+
+Open your **appsettings.json** file and add following entries at the top level of the JSON. Replace the:
+
+* **Instance** with your Azure AD B2C instance, such as `https://contoso.b2clogin.com`.
+* **ClientId** Application ID you just registered.
+* **Domain** your Azure AD B2C tenant name (or ID).
+* **SignUpSignInPolicyId** the name of the sign-up and sign-in policy
+* **EditProfilePolicyId** the name of the edit profile policy
+* **SignedOutCallbackPath** After a user successfully logout, Azure AD B2c will redirect the user back to this URL. The URL should be registered on the Reply Urls of your application, in Azure Portal.
+* **SignedOutCallbackPath** After a user successfully sing-in, Azure AD B2c will redirect the user back to this URL. The URL should be registered on the Reply Urls of your application, in Azure Portal. Default set to `signin-oidc`
+
+```JSON
+ "AzureAdB2C": {
+    "Instance": "https://fabrikamb2c.b2clogin.com",
+    "ClientId": "90c0fe63-bcf2-44d5-8fb7-b8bbc0b29dc6",
+    "Domain": "fabrikamb2c.onmicrosoft.com",
+    "SignedOutCallbackPath": "/signout/B2C_1_susi",
+    "SignUpSignInPolicyId": "b2c_1_susi",
+    "EditProfilePolicyId": "b2c_1_edit_profile"
+  }
+```
+
+## Run the sample
+
+Clean the solution, rebuild the solution, and run it. Once you run the  web application, you are presented with the standard ASP.NET home page. Click on the Sign-in button top-right to trigger the Azure AD B2C sign-up or sign-in flow.
+
+> Note: The above configuration requires you to run the project under the `https://localhost:44316/` URL. If it's not so, you can edit the `Properties/launchSettings.json` file. For example:
+
+```JSON
+"SampleWebApp": {
+    "commandName": "Project",
+    "launchBrowser": true,
+    "applicationUrl": "https://localhost:44316;http://localhost:5000",
+    "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+    }
+}
+```
