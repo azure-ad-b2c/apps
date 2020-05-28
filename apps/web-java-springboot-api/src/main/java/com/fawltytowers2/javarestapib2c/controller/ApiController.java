@@ -14,6 +14,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.fawltytowers2.javarestapib2c.model.Item;
 import com.fawltytowers2.javarestapib2c.security.MsalAuthHelper;
 
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 public class ApiController {
 
@@ -34,7 +36,7 @@ public class ApiController {
         , new Item( "002003004", "Second item")
         , new Item( "003004005", "Third item")
     ));
-
+    
     @RequestMapping("/echo")
     public String echo() {
         return "Hello from msal-obo-sample!";
@@ -44,6 +46,7 @@ public class ApiController {
     public List<Item> listItems() {
         return items;
     }
+
     @RequestMapping("/api/items/{id}")
     public Item getItem(@PathVariable String id, HttpServletResponse res) {
         Item item = null;
