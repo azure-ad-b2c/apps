@@ -54,11 +54,11 @@ The second change is due to we haven't completed all things with SAML and certif
 extendedMetadataDelegate.setMetadataTrustCheck(false);
 ```
 
-Optionally, you may need to set a new EntityID for the SAML AuthnRequest message that the Java WebApp uses since it needs to be unique within the B2C tenant. If this name is taken already, you may need to select a new one (add somehing unique after it). If you select a new one, make sure it matches the change you do below to the IdentifierUris in the Manifest.
+You need to set a new EntityID for the SAML AuthnRequest message that the Java WebApp uses to the Application ID URI from the B2C App Registration.
 
 ```java
-metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
-//metadataGenerator.setEntityId("...some other id..."); 
+//metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
+metadataGenerator.setEntityId("https://yourtenant.onmicrosoft.com/<guid>"); 
 ```
 
 With these changes saved, you are ready to build a new version of the app
