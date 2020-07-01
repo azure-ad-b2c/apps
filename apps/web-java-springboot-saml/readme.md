@@ -10,6 +10,16 @@ In order to build this sample, you need to have a Azure AD B2C tenant available 
 ## Step 1 - SAML Apps in Azure AD B2C
 The first step is to follow the documentation for how to [register a SAML application in Azure B2C](https://docs.microsoft.com/en-us/azure/active-directory-b2c/connect-with-saml-service-providers). The documentation will also guide you how to create a B2C Custom Policy that emits SAML tokens and to test it with a Microsoft provided SAML Test Application.
 
+One things to make sure you do not miss:
+
+- Create an Application ID URI. This is in the Overview section and you click on the link. The Uri will be something like ***https://yourtenant.onmicrosoft.com/<guid>*** where the guid will be your AppID. Open the Manifest and see that the ***IdentifierUris*** looks like this.  
+
+```JSON
+	"identifierUris": [
+		"https://yourtenant.onmicrosoft.com/<guid>"
+	],
+```
+
 You can not skip this step.
 
 ## Step 2 - Download and build the Java Spring Boot webapp
@@ -44,10 +54,11 @@ The second change is due to we haven't completed all things with SAML and certif
 extendedMetadataDelegate.setMetadataTrustCheck(false);
 ```
 
-The third and last change is to update the EntityID that we send in the SAML AuthnRequest message
+Optionally, you may need to set a new EntityID for the SAML AuthnRequest message that the Java WebApp uses since it needs to be unique within the B2C tenant. If this name is taken already, you may need to select a new one (add somehing unique after it). If you select a new one, make sure it matches the change you do below to the IdentifierUris in the Manifest.
+
 ```java
-//metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
-metadataGenerator.setEntityId("http://localhost:8080/saml/SSO"); 
+metadataGenerator.setEntityId("com:vdenotaris:spring:sp");
+//metadataGenerator.setEntityId("...some other id..."); 
 ```
 
 With these changes saved, you are ready to build a new version of the app
@@ -66,14 +77,14 @@ One way of hosting your manifest in a way that B2C can reach it is by storing in
 In the Manifest of the App Registration, locate the ***samlMetadataUrl*** attribute and add the url to your manifest file. Please not that you need to change ***yourstorageaccountname*** and ***mycontainername*** to the names you selected.
 
 ```JSON
-"samlMetadataUrl": "https://yourstorageaccountname.blob.core.windows.net/mycontainername/spring_saml_metadata.xml"
+    "samlMetadataUrl": "https://yourstorageaccountname.blob.core.windows.net/mycontainername/spring_saml_metadata.xml"
 ```
 
-Update the attribute ***identifierUris*** to match the change you did in the WebSecurityConfig.java file for the EntityID 
+Update the attribute ***identifierUris*** to match the change you did in the WebSecurityConfig.java file for the EntityID.  
 ```JSON
 	"identifierUris": [
-		...,
-        "http://localhost:8080/saml/SSO"
+		"https://yourtenant.onmicrosoft.com/<guid>",
+        "com:vdenotaris:spring:sp"
 	],
 ```
 Save the Manifest
@@ -90,3 +101,7 @@ Complete the B2C Signup/Sign in page. If you already have users in your tenant y
 After the signin is completed, the webapp returns to its homepage and the users objectId is displayed on the page as the Java sample uses the NameID attribute to display there, which for B2C is the user's objectId.
 
 You have successfully migrated a Java Spring Boot webapp to use Azure AD B2C as it's SAML Idp!
+
+## SAML Troubleshhoting
+If you are using the Firefox browser, there is a handy extension named "SAML tracer" that is like Fiddler but decodes SAML nicely.
+
