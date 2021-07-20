@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "react": "16.8.3",
-    "react-native": "^0.59.6",
+    "react-native": "^0.62.3",
     "react-native-app-auth": "^3.1.0",
     "styled-components": "^3.4.9"
   },
