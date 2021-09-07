@@ -23,7 +23,7 @@ Try out the working sample: [B2C-OIDC Login App](https://app.thegamesstore.in/)
 From your shell or command line:
 
 ```powershell
-git clone https://github.com/techjazz-MS/B2C_EmbeddedSignin_nodejs_passportjs_Sample.git
+git clone https://github.com/azure-ad-b2c/apps.git
 ```
 
 Navigate to the `"B2C_EmbeddedSignin_nodejs_passportjs_Sample-main"` folder
