@@ -6,7 +6,7 @@ level: 200
 client: NodeJs WebApp
 endpoint: Microsoft Identity Platform
 ---
-# A NodeJS WebApp signing-in users with the Microsoft Identity Platform in Azure AD B2C using the Embedded sign-in experience using iframe
+# A NodeJS WebApp signing-in users with the Microsoft Identity Platform in Azure AD B2C using the Embedded sign-in experience using iframe.
 
 [![Build status](https://identitydivision.visualstudio.com/IDDP/_apis/build/status/AAD%20Samples/.NET%20client%20samples/ASP.NET%20Core%20Web%20App%20tutorial)](https://identitydivision.visualstudio.com/IDDP/_build/latest?definitionId=819)
 
