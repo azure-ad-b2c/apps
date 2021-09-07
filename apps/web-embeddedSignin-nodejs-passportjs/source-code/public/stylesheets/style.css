@@ -1,0 +1,141 @@
+body {
+    background-color: #ffff;
+}
+
+.container {
+    padding-top: 80px;
+}
+
+.jumbotron {
+    background-color: rgb(95, 94, 94);
+    color:#ffff;
+    border-radius: 20px;
+}
+
+.navbar-custom .navbar-text {
+    color:#ffff;
+    font-size: 20px;
+}
+
+.navbar-toggler {
+    /* background-color: rgb(197, 11, 104); */
+    width: 47px;
+    height: 34px;
+    border: 2px solid #ffff;
+    border-radius: 5px;
+}
+
+.navbar-toggler .line{
+    width: 100%;
+    float: left;
+    height: 2px;
+    background-color: #ffff;
+    margin-bottom: 5px;
+}
+
+.btn-custom{
+    border: 2px solid #ffff;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.btn-custom:hover{
+    background-color: #ffff;
+    color:rgb(43, 42, 42) !important;
+}
+
+.modal-body {
+    position: relative;
+    -webkit-box-flex: 1;
+    /* -ms-flex: 1 1 auto; */
+    flex: 1 1 auto;
+    padding: 3rem;
+}
+
+#loginFrame {
+    height: 600px;
+    width: 400px; 
+    justify-content: center;
+}
+
+
+#loader1 {
+    position: absolute;
+    left: 37%;
+    top: 38%;
+    /* border-radius: 20px;
+    padding: 25px;
+    border: 1px solid #777777;
+    background: #ffff;
+    box-shadow: 0px 0px 10px #777777; */
+}
+
+.profileEdit-btn {
+    border: 2px solid white;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 5px;
+    text-decoration: none;
+    color: white !important;
+}
+
+.profileEdit-btn:hover{
+    background-color: #ffff;
+    color:rgb(43, 42, 42) !important;
+}
+
+.btn-dropdown {
+    border: 2px solid #ffff;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-left: 5px;
+    color:#ffff;
+}
+
+.btn-dropdown:hover{
+    color:rgb(14, 13, 13);
+    background-color: #ffff;
+}
+
+.dropdown-menu {
+    background-color: rgb(43, 42, 42);
+}
+
+.dropdown-item {
+    color: #ffff;
+}
+
+
+.nav-username {
+    color: #ffff;
+    margin-top: 15px;
+    margin-right: 10px;
+}
+
+.nav-username:hover {
+    color: white;
+    text-decoration: none;
+}
+
+.profile-container {
+    background-color: rgb(122, 121, 121);
+    border-radius: 20px;
+    margin-top: 20px;
+    padding: 10px 10px 10px 20px;
+    font-size: 15px;
+    color: white;
+
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(43, 42, 42);
+    color: #ffff;
+    text-align: center;
+}
