@@ -16,24 +16,26 @@ module.exports = (passport) => {
     //-----------------------------------------------------------------------------
 
     passport.serializeUser((user, done) => {
+        console.log(`User (serialize) ------> ${JSON.stringify(user)} \n\n`);
         done(null, user.oid);
     });
 
     passport.deserializeUser((oid, done) => {
         findByOid(oid, (err, user) => {
+            console.log(`User (deserialize) ----> ${JSON.stringify(user)} \n\n`);
             done(err, user);
         });
     });
 
     let users = [];
 
-    var findByOid = (oid, fn) => {
-        console.log(`OID >>> ${oid}`);
-        console.log(`Users_Array >>>>>> ${JSON.stringify(users)}`);
+    let findByOid = (oid, fn) => {
+        console.log(`OID ------> ${oid} \n\n`);
+        console.log(`Users_Array ------> ${JSON.stringify(users)} \n\n`);
         for(let i = 0, len = users.length; i < len; i++){
             let user = users[i];
-            if(user.oid === oid) { 
-                console.log('Hey, we found the user >>>>>>> ' + JSON.stringify(user));
+            if(user.oid === oid) {
+                console.log(`User found --------> ${JSON.stringify(user)} \n\n`);
                 return fn(null, user);
             }
         }
@@ -76,11 +78,11 @@ module.exports = (passport) => {
         useCookieInsteadOfSession: configAuth.creds.useCookieInsteadOfSession,
         cookieEncryptionKeys: configAuth.creds.cookieEncryptionKeys,
         clockSkew: configAuth.creds.clockSkew,
-    }, (req, iss, sub, profile, access_token, refresh_token, params, done) => {
+    }, (iss, sub, profile, access_token, refresh_token, done)  => {
+        console.log(`Profile ------>  + ${JSON.stringify(profile)} \n\n`);
         if(!profile.oid) {
             return done(new Error("No oid found"), null);
         }
-        profile.tokens = params;
         // asynchronous verification, for effect...
         process.nextTick(() => {
             findByOid(profile.oid, (err, user) => {

@@ -16,8 +16,6 @@ This sample shows how to build a NodeJS Express Web app that uses Passport.js to
 
 ![Sign in with Azure AD](ReadmeFiles/sign-in.png)
 
-Try out the working sample: [B2C-OIDC Login App](https://app.thegamesstore.in/)
-
 ### Step 1: Clone or download this repository
 
 From your shell or command line:

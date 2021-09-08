@@ -28,9 +28,7 @@ router.get('/', (req, res) => {
 
 // '/profile' is only available to logged in user
 router.get('/profile', isLoggedIn, (req, res) => {
-    res.render('profile.ejs', {
-        user: req.user
-    });
+    res.render('profile', { user: req.user });
 });
 
 router.get('/login', (req, res, next) => {
