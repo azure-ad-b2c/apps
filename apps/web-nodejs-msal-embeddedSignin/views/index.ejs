@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>B2C MSAL App</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-custom" style="background-color: #313030;">
+        <a class="navbar-brand navbar-text" href="/"><img src="/images/CloudLogo.gif" width="50" height="50" > B2C MSAL App</a>
+        <button class="navbar-toggler"  type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <!-- <span class="navbar-toggler-icon"></span> -->
+            <span class="line"></span> 
+            <span class="line"></span> 
+            <span class="line" style="margin-bottom: 0;"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse flex-grow-0" id="navbarSupportedContent">  
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">            
+            </ul>         
+            <ul class="navbar-nav navbar-right">
+                <!-- if statement -->
+                    <li class="nav-item active">
+                    <% if(!user) { %>
+                        <!-- <a class="btn btn-custom" id="signIn" href="/login" aria-haspopup="true" aria-expanded="false" style="color: #fff;"><i class="fas fa-sign-in-alt"></i> SignIn</a> -->
+                        <a class="btn btn-custom" id="signIn" data-toggle="modal" data-target="#loginModal" style="color: #fff;"><i class="fas fa-sign-in-alt"></i> SignIn</a>
+                    </li>
+
+                    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="loginModalLabel"><img src="/images/CloudLogo.gif" width="50" height="50" > B2C Login</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="frameWrap">
+                                    <img id="loader1" src="/images/spinner.gif" width="100" height="100" alt="loading gif" />
+                                </div>
+                                <iframe id="loginFrame" frameborder="0" src="about:blank" data-isloaded="0" ></iframe> 
+                            </div>
+                        </div>
+                    </div>
+                    <% } else { %>
+                    <li class="nav-item active">
+                        <div class="dropdown show">
+                            <a class="btn btn-dropdown dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user" aria-hidden="true"></i> <%= user.username %>
+                            </a>
+                          
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                              <a class="dropdown-item" href="/profileEdit"><i class="fas fa-id-badge"></i> Edit Profile</a>
+                              <a class="dropdown-item" href="/resetPassword"><i class="fas fa-key"></i> Reset Password</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item active">
+                      <a class="btn btn-custom" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>                                 
+                    <% } %>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="jumbotron text-center">
+            <h1><span class="fas fa-lock"></span> B2C MSAL Application</h1>
+              <% if(!user) { %>
+                <p>Login with B2C using MSAL-Node</p>
+              <% } else { %>
+                <h3>Welcome <%= user.username %> !</h3>
+              <% } %>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="well">
+              <% if(user) { %>
+                 <h3><span class="fas fa-user"></span> <%= user.username %></h3> 
+                 <div class="container profile-container">
+                   <table class="table">
+                     <tr>
+                       <td>Name: <%= user.idToken.given_name + " " + user.idToken.family_name %></td>
+                     </tr>
+                     <tr>
+                        <td>UserId: <%= user.idToken.oid %></td>
+                     </tr>
+                     <tr>
+                        <td>DisplayName: <%= user.idToken.name %></td>
+                     </tr>
+                   </table>
+                   <hr style="background-color: white;">
+                   <a class="btn profileEdit-btn" href="/profileEdit" ><i class="fas fa-pencil-alt"></i> Edit Profile</a>
+                   <a class="btn profileEdit-btn" href="/resetPassword"><i class="fas fa-key" aria-hidden="true"></i> Reset Password</a>
+                 </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+    </div>
+
+  <div class="footer">
+    <p>B2C WebApp - MSAL-NODE Application</p>
+  </div>
+
+    <!-- Bootstrap/jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Shows the loginModal when the SignIn/SignUp button is clicked-->
+    <script>
+        $("#signIn").on("click", function () {
+            $("#loginModal").modal("show");
+            $('#loginFrame').on('load', function () {
+                $('#loader1').hide();
+            });
+            $('#loginFrame').attr('src', '/login');
+        });
+    </script>
+
+    <!-- Because the authorization flow happens inside the iframe, we need to reload the main page.-->
+    <!-- <script>
+      if (document.referrer.startsWith('https://login.thegamesstore.in/loader')) {
+        window.top.location.reload();
+      }        
+    </script> -->
+
+
+    <script>
+      var iframe = document.getElementById('loginFrame');
+      iframe.onload = function() {
+        var iframeBody = this.contentDocument.body;
+        if(iframeBody) {
+          window.top.location.reload();
+        }
+      }
+    </script>
+
+  </body>
+</html>

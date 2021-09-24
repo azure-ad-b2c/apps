@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/aa8117d3-52c1-498f-b290-e2e93ced281f/resourceGroups/AppServiceRG/providers/Microsoft.Web/sites/B2CEmbeddedSigninAppMSAL",
+    "appService.deploySubpath": "."
+}
